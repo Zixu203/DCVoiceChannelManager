@@ -5,6 +5,8 @@ from discord.ext import tasks
 from discord.interactions import Interaction
 import setting
 
+import datetime, pytz
+
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
@@ -182,6 +184,18 @@ async def extend_reserve_time(interaction: discord.Interaction):
 
     room.re_reserve()
     await interaction.response.send_message(f"{interaction.user.mention} {room.voice_channel.name} 續借成功囉 繼續加油加油!")
+
+@bot.tree.command(name="clean", description="clean count of messages in two weeks.")
+async def clean_message(interaction: discord.Interaction, count: int):
+    delRange = datetime.datetime.now()-datetime.timedelta(days=14)
+    delRange = delRange.replace(tzinfo=pytz.timezone('UTC'))
+    channel = interaction.client.get_channel(interaction.channel_id)
+    msgs = [msg async for msg in channel.history(limit=count) if delRange < msg.created_at]
+    replyMsg = "Cleaning..."
+    if len(msgs) != count: replyMsg+="(Some Message is too old to delete.)"
+    await interaction.response.send_message(replyMsg, delete_after=3)
+    if len(msgs) != 0: await channel.delete_messages(msgs)
+
 
 if __name__ == '__main__':
     bot.run(setting.setting_ins.bot_setting.bot_token)
