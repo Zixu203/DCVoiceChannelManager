@@ -32,8 +32,7 @@ $ ./<virtual environment name>/Scripts/activate # Activating virtualenv (for bas
 ## Setting before use
 1. find static_data.py 
 2. fill the variable `bot_token` by the token of your bot
-3. fill the variable `bot_role_name` by the name of your bot
-4. execute `main.py`
+3. execute `main.py`
 
 ## Create your own bot
 Make sure enable the privileged gateway intents
