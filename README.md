@@ -30,7 +30,7 @@ $ ./<virtual environment name>/Scripts/activate # Activating virtualenv (for bas
 ```
 
 ## Setting before use
-1. find static_data.py 
+1. find `static_data.py`
 2. fill the variable `bot_token` by the token of your bot
 3. execute `main.py`
 
